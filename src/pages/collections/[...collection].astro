@@ -1,0 +1,49 @@
+---
+import GalleryLayout from "@layouts/GalleryLayout.astro";
+import PhotoGrid from '@components//PhotoGrid.astro';
+import { getCollections, getImages } from '@data/imageStore';
+
+const allCollection = {
+	id: undefined,
+	name: 'All',
+};
+const collections = [allCollection, ...(await getCollections())];
+const { collection } = Astro.params;
+const images = await getImages(collection ? { collection } : {});
+
+export const getStaticPaths = async () => {
+	return [{ id: undefined }, ...(await getCollections())].map((collection) => {
+		return {
+			params: { collection: collection.id },
+		};
+	});
+};
+---
+
+
+<GalleryLayout title="Collections" description="Page for collections.">
+	<div class="site-container pt-24 md:pt-36">
+		<div class="mx-auto max-w-6xl text-center">
+        </div>
+        <div class="flex justify-center mb-10">
+            <div class="flex flex-wrap gap-2 justify-center">
+                {
+                    collections.map((collectionBtn) => (
+                        <a href={`/collections/${collectionBtn.id ? collectionBtn.id : ''}`}>
+                            <div
+                                class={`px-4 py-2 border ${
+                                    collectionBtn.id === collection
+                                        ? 'border-black bg-black text-white'
+                                        : 'border-gray-200 text-gray-700 hover:border-gray-300'
+                                } transition-all`}
+                            >
+                                {collectionBtn.name}
+                            </div>
+                        </a>
+                    ))
+                }
+            </div>
+        </div>
+        <PhotoGrid images={images} />
+	</div>
+</GalleryLayout>

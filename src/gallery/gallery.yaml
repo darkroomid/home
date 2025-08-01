@@ -1,0 +1,207 @@
+collections:
+  - id: nature
+    name: Nature
+  - id: cs
+    name: Cityscape
+  - id: people
+    name: People
+  - id: random
+    name: Random
+  - id: bw
+    name: Black and White
+  
+
+  
+images:
+  - path: analog/cityscape_couple.jpg
+    meta:
+      title: A Date with View
+      description:
+      collections:
+        - cs
+        - people
+    exif: {}
+
+  - path: analog/airport.jpg
+    meta:
+      title: Airport Situations
+      description:
+      collections:
+        - cs
+    exif: {}
+
+  - path: analog/angke_port.jpg
+    meta:
+      title: Tired
+      description:
+      collections:
+        - bw
+        - cs
+    exif: {}
+
+  - path: analog/burn.jpg
+    meta:
+      title: Burn Firlm
+      description:
+      collections:
+        - random
+    exif: {}
+
+  - path: analog/dik_gold.jpg
+    meta:
+      title: Every one loved
+      description:
+      collections:
+        - random
+    exif: {}
+
+  - path: analog/cats.jpg
+    meta:
+      title: Cats
+      description:
+      collections:
+        - nature
+    exif: {}
+
+  - path: analog/construction.jpg
+    meta:
+      title: Construction
+      description:
+      collections:
+        - cs
+    exif: {}
+
+  - path: analog/crow_and_chair.jpg
+    meta:
+      title: Crow
+      description:
+      collections:
+        - nature
+    exif: {}
+
+  - path: analog/driver_online.jpg
+    meta:
+      title: Cats
+      description:
+      collections:
+        - cs
+        - people
+    exif: {}
+
+  - path: analog/pair_of_bottle.jpg
+    meta:
+      title: Pair of Bottle
+      description:
+      collections:
+        - random
+    exif: {}
+
+  - path: analog/lotus.jpg
+    meta:
+      title: Lotus
+      description:
+      collections:
+        - nature
+    exif: {}
+
+  - path: analog/mannequin.jpg
+    meta:
+      title: Mannequin.jpg
+      description:
+      collections:
+        - random
+        - cs
+    exif: {}
+
+  - path: analog/mosque.jpg
+    meta:
+      title: Mosque
+      description:
+      collections:
+        - cs
+    exif: {}
+
+  - path: analog/mural.jpg
+    meta:
+      title: Mural
+      description:
+      collections:
+        - cs
+        - random
+    exif: {}
+
+  - path: analog/national_gallery_sg.jpg
+    meta:
+      title: National Gallery Singapore
+      description:
+      collections:
+        - cs
+    exif: {}
+
+  - path: analog/parrot_in_bw.jpg
+    meta:
+      title: Parrot
+      description:
+      collections:
+        - nature
+    exif: {}
+
+  - path: analog/rain_pendulum.jpg
+    meta:
+      title: Rain pendulum
+      description:
+      collections:
+        - random
+    exif: {}
+
+  - path: analog/rooftops.jpg
+    meta:
+      title: Rooftop
+      description:
+      collections:
+        - bw
+        - cs
+    exif: {}
+
+  - path: analog/sailing_at_bay.jpg
+    meta:
+      title: Sailing
+      description:
+      collections:
+        - nature
+        - cs
+    exif: {}
+
+  - path: analog/sakura.jpg
+    meta:
+      title: Sakura
+      description:
+      collections:
+        - nature
+    exif: {}
+
+  - path: analog/sunrise_at_station.jpg
+    meta:
+      title: Sunrise
+      description:
+      collections:
+        - nature
+        - cs
+    exif: {}
+
+  - path: analog/tired.jpg
+    meta:
+      title: Tired
+      description:
+      collections:
+        - people
+    exif: {}
+
+  - path: analog/wall_rack.jpg
+    meta:
+      title: Wall Rack
+      description:
+      collections:
+        - random
+    exif: {}
+

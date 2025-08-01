@@ -1,0 +1,16 @@
+---
+// layout
+import Gears from "@components/Gears.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+// components
+import Hero from "@components/Hero.astro";
+
+// data
+import siteData from "@config/siteData";
+---
+
+<BaseLayout title={siteData.title} description={siteData.description} navStartStyle="white">
+    <Hero />
+    <Gears />
+</BaseLayout>
