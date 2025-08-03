@@ -1,5 +1,5 @@
 collections:
-  - id: fav
+  - id: favorite
     name: Favorite
   - id: nature
     name: Nature
@@ -22,7 +22,7 @@ images:
       collections:
         - cs
         - people
-        - fav
+        - favorite
     exif: {}
 
   - path: analog/airport.jpg
@@ -48,7 +48,7 @@ images:
       description:
       collections:
         - random
-        - fav
+        - favorite
     exif: {}
 
   - path: analog/dik_gold.jpg
@@ -73,7 +73,7 @@ images:
       description:
       collections:
         - cs
-        - fav
+        - favorite
     exif: {}
 
   - path: analog/crow_on_chair.jpg
@@ -82,7 +82,7 @@ images:
       description:
       collections:
         - nature
-        - fav
+        - favorite
     exif: {}
 
   - path: analog/driver_online.jpg
@@ -134,7 +134,7 @@ images:
       collections:
         - cs
         - random
-        - fav
+        - favorite
     exif: {}
 
   - path: analog/national_gallery_sg.jpg
@@ -151,7 +151,7 @@ images:
       description:
       collections:
         - nature
-        - fav
+        - favorite
     exif: {}
 
   - path: analog/rain_pendulum.jpg
@@ -178,7 +178,7 @@ images:
       collections:
         - nature
         - cs
-        - fav
+        - favorite
     exif: {}
 
   - path: analog/sakura.jpg
@@ -187,7 +187,7 @@ images:
       description:
       collections:
         - nature
-        - fav
+        - favorite
     exif: {}
 
   - path: analog/sunrise_at_station.jpg
