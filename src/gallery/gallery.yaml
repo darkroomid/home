@@ -1,4 +1,6 @@
 collections:
+  - id: fav
+    name: Favorite
   - id: nature
     name: Nature
   - id: cs
@@ -20,6 +22,7 @@ images:
       collections:
         - cs
         - people
+        - fav
     exif: {}
 
   - path: analog/airport.jpg
@@ -45,6 +48,7 @@ images:
       description:
       collections:
         - random
+        - fav
     exif: {}
 
   - path: analog/dik_gold.jpg
@@ -69,14 +73,16 @@ images:
       description:
       collections:
         - cs
+        - fav
     exif: {}
 
-  - path: analog/crow_and_chair.jpg
+  - path: analog/crow_on_chair.jpg
     meta:
       title: Crow
       description:
       collections:
         - nature
+        - fav
     exif: {}
 
   - path: analog/driver_online.jpg
@@ -128,6 +134,7 @@ images:
       collections:
         - cs
         - random
+        - fav
     exif: {}
 
   - path: analog/national_gallery_sg.jpg
@@ -144,6 +151,7 @@ images:
       description:
       collections:
         - nature
+        - fav
     exif: {}
 
   - path: analog/rain_pendulum.jpg
@@ -170,6 +178,7 @@ images:
       collections:
         - nature
         - cs
+        - fav
     exif: {}
 
   - path: analog/sakura.jpg
@@ -178,6 +187,7 @@ images:
       description:
       collections:
         - nature
+        - fav
     exif: {}
 
   - path: analog/sunrise_at_station.jpg

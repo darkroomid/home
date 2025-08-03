@@ -7,7 +7,7 @@ const allCollection = {
 	id: undefined,
 	name: 'All',
 };
-const collections = [allCollection, ...(await getCollections())];
+const collections = [...(await getCollections())];
 const { collection } = Astro.params;
 const images = await getImages(collection ? { collection } : {});
 
