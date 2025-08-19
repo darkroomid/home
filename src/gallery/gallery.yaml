@@ -1,16 +1,19 @@
 collections:
-  - id: favorite
-    name: Favorite
+  - id: favourite
+    name: Favourite
   - id: nature
     name: Nature
-  - id: cs
+  - id: cityscape
     name: Cityscape
   - id: people
     name: People
   - id: random
     name: Random
-  - id: bw
+  - id: black-and-white
     name: Black and White
+  - id: wallpaper
+    name: Wallpaper
+
   
 
   
@@ -20,9 +23,10 @@ images:
       title: A Date with View
       description:
       collections:
-        - cs
+        - cityscape
         - people
-        - favorite
+        - favourite
+        - wallpaper
     exif: {}
 
   - path: analog/airport.jpg
@@ -30,7 +34,7 @@ images:
       title: Airport Situations
       description:
       collections:
-        - cs
+        - cityscape
     exif: {}
 
   - path: analog/angke_port.jpg
@@ -38,17 +42,17 @@ images:
       title: Tired
       description:
       collections:
-        - bw
-        - cs
+        - black-and-white
+        - cityscape
     exif: {}
 
   - path: analog/burn.jpg
     meta:
-      title: Burn Firlm
+      title: Burn Film
       description:
       collections:
         - random
-        - favorite
+        - favourite
     exif: {}
 
   - path: analog/dik_gold.jpg
@@ -72,8 +76,8 @@ images:
       title: Construction
       description:
       collections:
-        - cs
-        - favorite
+        - cityscape
+        - favourite
     exif: {}
 
   - path: analog/crow_on_chair.jpg
@@ -82,7 +86,7 @@ images:
       description:
       collections:
         - nature
-        - favorite
+        - favourite
     exif: {}
 
   - path: analog/driver_online.jpg
@@ -90,7 +94,7 @@ images:
       title: Cats
       description:
       collections:
-        - cs
+        - cityscape
         - people
     exif: {}
 
@@ -116,7 +120,7 @@ images:
       description:
       collections:
         - random
-        - cs
+        - cityscape
     exif: {}
 
   - path: analog/mosque.jpg
@@ -124,7 +128,7 @@ images:
       title: Mosque
       description:
       collections:
-        - cs
+        - cityscape
     exif: {}
 
   - path: analog/mural.jpg
@@ -132,9 +136,10 @@ images:
       title: Mural
       description:
       collections:
-        - cs
+        - cityscape
         - random
-        - favorite
+        - favourite
+        - wallpaper
     exif: {}
 
   - path: analog/national_gallery_sg.jpg
@@ -142,7 +147,7 @@ images:
       title: National Gallery Singapore
       description:
       collections:
-        - cs
+        - cityscape
     exif: {}
 
   - path: analog/parrot_in_bw.jpg
@@ -151,7 +156,8 @@ images:
       description:
       collections:
         - nature
-        - favorite
+        - black-and-white
+        - favourite
     exif: {}
 
   - path: analog/rain_pendulum.jpg
@@ -167,8 +173,8 @@ images:
       title: Rooftop
       description:
       collections:
-        - bw
-        - cs
+        - black-and-white
+        - cityscape
     exif: {}
 
   - path: analog/sailing_at_bay.jpg
@@ -177,8 +183,9 @@ images:
       description:
       collections:
         - nature
-        - cs
-        - favorite
+        - cityscape
+        - favourite
+        - wallpaper
     exif: {}
 
   - path: analog/sakura.jpg
@@ -187,7 +194,7 @@ images:
       description:
       collections:
         - nature
-        - favorite
+        - favourite
     exif: {}
 
   - path: analog/sunrise_at_station.jpg
@@ -195,8 +202,7 @@ images:
       title: Sunrise
       description:
       collections:
-        - nature
-        - cs
+        - cityscape
     exif: {}
 
   - path: analog/tired.jpg
@@ -215,3 +221,39 @@ images:
         - random
     exif: {}
 
+  - path: digital/changi.jpg
+    meta:
+      title: Changi Airport
+      description:
+      collections:
+        - cityscape
+        - wallpaper
+        - favourite
+    exif: {}
+
+  - path: digital/garden_by_the_bay.jpg
+    meta:
+      title: Gardern By the Bay
+      description:
+      collections:
+        - nature
+        - wallpaper
+    exif: {}
+
+  - path: analog/cieling.jpg
+    meta:
+      title: YIA Cieling
+      description:
+      collections:
+        - wallpaper
+        - random
+    exif: {}
+
+  - path: analog/yia.jpg
+    meta:
+      title: YIA Airport
+      description:
+      collections:
+        - wallpaper
+        - favourite
+    exif: {}

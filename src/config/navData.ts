@@ -19,7 +19,7 @@ const navConfig: navItem[] = [
 	},
 	{
 		text: "Collections",
-		link: "/collections/favorite",
+		link: "/collections/favourite",
 	},
 	{
 		text: "Stores",
