@@ -1,7 +1,7 @@
 ---
 import 'glightbox/dist/css/glightbox.css';
 import '../styles/glightbox-custom.css';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import type { Image as ImageType } from '../data/galleryData';
 
 interface Props {
@@ -9,24 +9,49 @@ interface Props {
 }
 
 const { images } = Astro.props;
+
+// Grid thumbnails are rendered at a fixed, grid-appropriate width — never the
+// camera-native resolution (previously up to 3600px/7.6MB per image, which is
+// what was blocking the whole grid from loading). The justified-layout math
+// still uses the image's real aspect ratio (image.src.width/height), it just no
+// longer determines the downloaded pixel size.
+const THUMB_WIDTH = 480;
+// Above-the-fold images (roughly the first row at common viewport widths) load
+// eagerly with LCP priority; everything else is lazy.
+const EAGER_COUNT = 6;
+
+// Lightbox "full view" is capped too — the original camera files (up to 7.6MB,
+// 7000px+) are serving as the enlarged view otherwise, which is a lot to
+// download for a click-triggered viewer with no real visual benefit past ~2000px
+// on a screen.
+const lightboxImages = await Promise.all(
+	images.map((image) =>
+		getImage({ src: image.src, width: 2000, format: 'webp', quality: 82 }),
+	),
+);
 ---
 
 <section id="photo-grid" class="relative w-full mx-auto overflow-hidden">
 	{
-		images.map((image) => (
+		images.map((image, i) => (
 			<a
-				href={image.src.src}
+				href={lightboxImages[i].src}
 				class="photo-item glightbox absolute transition-transform hover:scale-[1.02] hover:z-10"
 				data-gallery="gallery1"
 				data-type="image"
 				data-glightbox={image.description ? `title: ${image.description}` : undefined}
+				data-nat-width={image.src.width}
+				data-nat-height={image.src.height}
 			>
 				<Image
 					src={image.src}
-					quality={15}
+					quality={78}
 					format="webp"
-					width={image.src.width}
-					height={image.src.height}
+					width={THUMB_WIDTH}
+					densities={[1, 2]}
+					loading={i < EAGER_COUNT ? 'eager' : 'lazy'}
+					decoding="async"
+					fetchpriority={i < EAGER_COUNT ? 'high' : 'auto'}
 					class="w-full h-full object-cover rounded-sm shadow-sm hover:shadow-lg transition-shadow"
 					alt={image.title}
 				/>

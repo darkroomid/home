@@ -4,14 +4,21 @@
  * You'll want a mobile image, and a desktop image for this.
  */
 
-import { Image } from "astro:assets";
+import { getImage } from "astro:assets";
 
 // components
 import Button from "@components/Button.astro";
 
 // images
 import heroImage from "@images/plane.jpg";
-import heroImageMobile from "@images/plane.jpg";
+
+// Both breakpoints previously rendered as separate <Image> tags with only CSS
+// `hidden`/`sm:hidden` toggling visibility — that doesn't stop the browser from
+// requesting both, so every visitor downloaded two multi-megabyte hero images
+// instead of one. A <picture> with a media-conditioned <source> means only the
+// variant that actually matches loads.
+const desktopHero = await getImage({ src: heroImage, height: 1400, format: "webp", quality: 80 });
+const mobileHero = await getImage({ src: heroImage, width: 1200, format: "webp", quality: 80 });
 ---
 
 <section id="hero" class="relative z-10 flex min-h-[100lvh] w-full">
@@ -19,22 +26,20 @@ import heroImageMobile from "@images/plane.jpg";
 	<div class="absolute -z-10 h-full min-h-full w-full overflow-hidden">
 		<div class="absolute inset-0 bg-black/10"></div>
 
-		<Image
-			src={heroImage}
-			class="hidden h-auto min-h-full w-full object-cover object-bottom sm:block"
-			alt="wedding"
-			aria-hidden="true"
-			loading="eager"
-			height={1400}
-		/>
-		<Image
-			src={heroImageMobile}
-			class="h-auto min-h-full w-full object-cover sm:hidden"
-			alt="wedding"
-			aria-hidden="true"
-			loading="eager"
-			width={1200}
-		/>
+		<picture>
+			<source media="(min-width: 640px)" srcset={desktopHero.src} width={desktopHero.attributes.width} height={desktopHero.attributes.height} />
+			<img
+				src={mobileHero.src}
+				width={mobileHero.attributes.width}
+				height={mobileHero.attributes.height}
+				class="h-auto min-h-full w-full object-cover object-bottom"
+				alt="wedding"
+				aria-hidden="true"
+				loading="eager"
+				fetchpriority="high"
+				decoding="async"
+			/>
+		</picture>
 	</div>
 
 	<!-- hero items -->
@@ -47,7 +52,7 @@ import heroImageMobile from "@images/plane.jpg";
 				Dark Side of the Room
 			</h1>
 			<p
-				class="mt-8 text-lg tracking-widest text-white italic drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)] md:max-w-[550px] md:text-2xl"
+				class="font-heading-1 text-primary-100 mt-8 text-lg font-normal tracking-wide drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)] md:max-w-[550px] md:text-2xl"
 			>
                 I trust pictures not words.
             </p>

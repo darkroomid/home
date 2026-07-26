@@ -22,8 +22,16 @@ const navConfig: navItem[] = [
 		link: "/collections/favourite",
 	},
 	{
+		text: "Journal",
+		link: "/journal",
+	},
+	{
 		text: "Stores",
 		link: "/stores",
+	},
+	{
+		text: "About",
+		link: "/about",
 	},
 ];
 

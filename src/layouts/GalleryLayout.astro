@@ -5,56 +5,56 @@ import Nav from "@components/Navigation.astro";
 import Seo from "@components/Seo.astro";
 
 import WorkSansVariable from "@fontsource-variable/work-sans/files/work-sans-latin-wght-normal.woff2";
-import RalewayVariable from "@fontsource-variable/raleway/files/raleway-latin-wght-normal.woff2";
 import PlayfairDisplayVariable from "@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2";
-import CinzelDecorative from "@fontsource/cinzel-decorative/files/cinzel-decorative-latin-400-normal.woff2";
 
+interface Props {
+	title: string;
+	description: string;
+	noindex?: boolean;
+}
+
+// Previously this layout ignored whatever title/description a page passed in
+// and hardcoded "Collections" / "Showcase page for collection of gallery." for
+// every single /collections/* page — so even after making the calling page
+// compute a real per-collection title/description, nothing changed, because
+// this component never accepted or forwarded them.
+const { title, description, noindex = false } = Astro.props as Props;
 ---
 
+<!doctype html>
 <html lang="en" class="h-full">
 	<head>
 		<meta charset="utf-8" />
-        <link rel="shortcut icon" href="/favicons/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="generator" content={Astro.generator} />
 
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!--
+		  Only Work Sans (--font-sans, global default) and Playfair Display
+		  (font-heading-1, used on every page's h1/h2/nav/buttons/logo) are
+		  preloaded here — Raleway and Cinzel Decorative, and the unused Google
+		  Fonts "Dancing Script" stylesheet, were previously loaded on every
+		  /collections page without anything on the page actually rendering
+		  text in those fonts. That's exactly what triggers the browser's
+		  "resource was preloaded but not used" console warning, plus it was
+		  three extra unnecessary requests per page load.
+		-->
+		<link rel="preload" href={WorkSansVariable} as="font" type="font/woff2" crossorigin="anonymous" />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
-			rel="stylesheet"
+			rel="preload"
+			href={PlayfairDisplayVariable}
+			as="font"
+			type="font/woff2"
+			crossorigin="anonymous"
 		/>
 
-		<meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
+		<!-- Favicons. Generated via scripts/generate-favicons.mjs from public/favicons/favicon-source.png -->
+		<link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />
+		<link rel="shortcut icon" href="/favicons/favicon.ico" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+		<link rel="manifest" href="/favicons/site.webmanifest" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
 
-
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
-
-        <!-- local font preload for better performance when not using ClientRouter -->
-        <link rel="preload" href={WorkSansVariable} as="font" type="font/woff2" crossorigin="anonymous" />
-        <link rel="preload" href={RalewayVariable} as="font" type="font/woff2" crossorigin="anonymous" />
-        <link
-            rel="preload"
-            href={PlayfairDisplayVariable}
-            as="font"
-            type="font/woff2"
-            crossorigin="anonymous"
-        />
-        <link rel="preload" href={CinzelDecorative} as="font" type="font/woff2" crossorigin="anonymous" />
-
-        <!-- Favicons. Generated from https://realfavicongenerator.net/ -->
-        <link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />
-        <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
-        <link rel="shortcut icon" href="/favicons/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
-        <link rel="manifest" href="/favicons/site.webmanifest" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <!-- other -->
-        <meta name="generator" content={Astro.generator} />
-        <link rel="sitemap" href="/sitemap-index.xml" />
-
-        <Seo type="general" title="Collections" description="Showcase page for collection of gallery." />
+		<Seo type="general" title={title} description={description} noindex={noindex} />
 	</head>
 	<body>
 		<Nav />

@@ -1,0 +1,4 @@
+# TODO: replace pub-xxxxxxxxxxxxxxxx with the real AdSense Publisher ID once issued.
+# Do not deploy the placeholder line below to production — AdSense will not recognize it,
+# and no ad network should be enabled until submission review is complete anyway.
+google.com, pub-xxxxxxxxxxxxxxxx, DIRECT, f08c47fec0942fa0

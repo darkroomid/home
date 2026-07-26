@@ -1,0 +1,33 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run check-content
+      - run: npm run build
+
+      # TODO: fill in repo secrets once the VPS/deploy details are settled:
+      #   VPS_HOST, VPS_USER, VPS_SSH_KEY, VPS_DEPLOY_PATH
+      # The deploy key referenced here MUST be scoped to only the deploy path,
+      # not full server access.
+      - name: Deploy dist/ to VPS
+        if: false # flip to `true` once the secrets above are configured
+        run: |
+          echo "${{ secrets.VPS_SSH_KEY }}" > deploy_key
+          chmod 600 deploy_key
+          rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
+            ./dist/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_DEPLOY_PATH }}"
+          rm -f deploy_key

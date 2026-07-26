@@ -1,0 +1,19 @@
+# Caddy serves the static Astro build directly; TLS is automatic via Let's Encrypt
+# as long as DNS for darkroom.id already points at this VPS.
+#
+# Copy this file to /etc/caddy/Caddyfile on the VPS (or include it from there) and
+# reload with `sudo systemctl reload caddy`. Adjust `root` to match VPS_DEPLOY_PATH
+# in .github/workflows/deploy.yml.
+
+darkroom.id, www.darkroom.id {
+	root * /var/www/darkroom.id
+	encode gzip zstd
+	file_server
+	try_files {path} /404.html
+
+	header {
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+}

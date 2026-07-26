@@ -1,0 +1,63 @@
+---
+// Shows the 5 most recent published articles on the homepage: the latest one
+// featured with an image, the next four below as text-only rows.
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+
+const articles = (await getCollection("articles", ({ data }) => !data.draft)).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const [latest, ...rest] = articles;
+const more = rest.slice(0, 4);
+---
+
+{
+	latest && (
+		<section class="site-container py-8 md:py-12">
+			<h2 class="h3 text-primary-500 mb-6 text-pretty uppercase">Latest From the Journal</h2>
+			<a href={`/journal/${latest.id}`} class="group flex flex-col gap-6 md:flex-row">
+				{latest.data.heroImage && (
+					<div class="aspect-video w-full overflow-hidden md:w-1/2">
+						<Image
+							src={latest.data.heroImage}
+							alt={latest.data.heroImageAlt ?? ""}
+							width={800}
+							format="webp"
+							quality={80}
+							loading="eager"
+							class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+						/>
+					</div>
+				)}
+				<div class="flex flex-col justify-center md:w-1/2">
+					<span class="text-primary-600 text-xs font-medium tracking-wide uppercase">
+						{latest.data.contentCluster}
+					</span>
+					<h3 class="font-heading-1 mt-2 text-2xl font-medium group-hover:opacity-80 md:text-3xl">
+						{latest.data.title}
+					</h3>
+					<p class="description mt-2 text-sm md:text-base">{latest.data.description}</p>
+					<span class="text-primary-600 mt-4 text-sm font-medium uppercase tracking-wide group-hover:opacity-80">
+						Read article &rarr;
+					</span>
+				</div>
+			</a>
+
+			{more.length > 0 && (
+				<div class="mt-8 divide-y divide-base-200 border-t border-base-200">
+					{more.map((article) => (
+						<a href={`/journal/${article.id}`} class="group block py-4">
+							<span class="text-primary-600 text-xs font-medium tracking-wide uppercase">
+								{article.data.contentCluster}
+							</span>
+							<h3 class="font-heading-1 mt-1 text-lg font-medium group-hover:opacity-80">
+								{article.data.title}
+							</h3>
+							<p class="description mt-1 text-sm">{article.data.description}</p>
+						</a>
+					))}
+				</div>
+			)}
+		</section>
+	)
+}

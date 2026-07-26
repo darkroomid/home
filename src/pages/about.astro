@@ -1,0 +1,79 @@
+---
+// Dedicated page (not the generic otherPages markdown route) so the profile
+// photo can render as a top-of-page hero image, matching the treatment used on
+// Journal article pages (see ArticleLayout.astro's heroImage handling).
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import profileImage from "@assets/images/me.png";
+
+const title = "About";
+const description = "About darkroom.id and the person behind it.";
+
+// TODO before this page is submission-ready (see google-adsense.md §2 —
+// Google's reviewers weigh this page as the biggest authorship/expertise signal
+// on the whole site):
+// - How long have you been shooting, and how did you start?
+// - Any specific background worth mentioning (formal training, assisting,
+//   a particular genre you specialize in, notable work)?
+// - What's the actual point of view behind darkroom.id — why should someone
+//   trust a gear review or technique guide from you specifically?
+// Vague "I love photography" copy reads as low-effort to both AdSense
+// reviewers and Google's helpful-content systems — be specific.
+---
+
+<BaseLayout title={title} description={description}>
+	<section class="mx-auto max-w-3xl px-4 pt-24 md:pt-36">
+		<Image
+			src={profileImage}
+			alt="Andrea Ross"
+			width={1200}
+			format="webp"
+			quality={82}
+			densities={[1.5, 2]}
+			loading="eager"
+			class="mb-8 aspect-video w-full rounded-none object-cover"
+		/>
+
+		<h1 class="h1 description text-center">{title}</h1>
+		<div class="markdown-content mt-8 max-w-none text-sm md:mt-12 md:px-8 md:text-base">
+			<p>
+				darkroom.id is written and shot by <strong>Andrea Ross</strong>. Every gear review,
+				tutorial, and editing guide here comes from actual use — the analog and digital
+				photography throughout this site is my own.
+			</p>
+
+			<h2>What I shoot with</h2>
+			<ul>
+				<li>
+					<strong>Analog</strong>
+					<ul>
+						<li>Pentax KM with an SMC Pentax-M 40mm f/2.8 pancake</li>
+						<li>SMC Pentax-M 50mm f/1.4</li>
+						<li>Super Takumar Multi-Coated 50mm f/1.4</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Digital</strong>
+					<ul>
+						<li>Panasonic Lumix GX85 with the G Vario 12-32mm kit zoom</li>
+					</ul>
+				</li>
+			</ul>
+
+			<h2>What this site does</h2>
+			<p>
+				Every review, tutorial, and editing guide in the <a href="/journal">Journal</a> is
+				illustrated primarily with my own original photography — not stock images, not
+				manufacturer marketing photos passed off as a review. See <a href="/disclosure">Disclosure</a>
+				for how I handle gear/product images and affiliate links.
+			</p>
+
+			<h2>Get in touch</h2>
+			<p>
+				See the <a href="/contact">Contact</a> page, or find me at
+				<a href="https://instagram.com/darkroomid__">@darkroomid__ on Instagram</a> and
+				<a href="https://x.com/darkroomid__">@darkroomid__ on X</a>.
+			</p>
+		</div>
+	</section>
+</BaseLayout>
