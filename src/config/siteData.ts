@@ -19,13 +19,18 @@ const siteData: SiteDataProps = {
 	name: "Darkroom.id",
 	// Your website's title and description (meta fields)
 	title: "Darkroom.id",
-	description: "Just Room without Light",
+	// This is the homepage's meta description — was just the tagline ("Just Room
+	// without Light"), which reads well as a hero headline but tells a search
+	// engine nothing about what the site actually offers. Kept the tagline as
+	// on-page copy (see Hero.astro) and made this actually descriptive instead.
+	description:
+		"Original analog and digital photography, gear reviews, and editing tutorials from darkroom.id.",
 	useViewTransitions: true,
 	// Your information!
 	author: {
 		name: "Andrea Ross",
-		email: "lurah.milan@gmail.com",
-		twitter: "dark.room.id",
+		email: "hi@darkroom.id",
+		twitter: "darkroomid__",
 	},
 
 	// default image for meta tags if the page doesn't have an image already

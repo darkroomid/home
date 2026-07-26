@@ -1,0 +1,56 @@
+---
+// Klaro (self-hosted, MIT-licensed, IAB TCF v2.2-compatible CMP) + Google Consent
+// Mode v2 defaults + GA4 + a soft-gated AdSense snippet. Personalized ads and
+// analytics MUST NOT fire until consent is granted (google-adsense.md §6) — gated
+// for every visitor, not just EEA/UK/CH, since accurately restricting this to just
+// those regions on a static site would need real IP geolocation; applying the
+// stricter opt-in-by-default behavior globally is a strict superset of what's
+// legally required and removes an entire class of geo-detection bugs.
+
+const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? "G-XXXXXXXXXX";
+const ADSENSE_PUBLISHER_ID = import.meta.env.PUBLIC_ADSENSE_PUBLISHER_ID ?? "ca-pub-xxxxxxxxxxxxxxxx";
+const ADSENSE_ENABLED = import.meta.env.PUBLIC_ADSENSE_ENABLED === "true";
+---
+
+<!-- Google Consent Mode v2 defaults — MUST load before any other Google tag. -->
+<script is:inline>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag("consent", "default", {
+		ad_storage: "denied",
+		ad_user_data: "denied",
+		ad_personalization: "denied",
+		analytics_storage: "denied",
+		wait_for_update: 500,
+	});
+</script>
+
+<!-- Klaro consent manager — see public/klaro-config.js for the consent → Consent Mode v2 mapping. -->
+<script defer src="/klaro-config.js"></script>
+<script defer data-config="klaroConfig" src="https://cdn.kiprotect.com/klaro/v0.7/klaro.js"></script>
+
+<!-- GA4 — loads unconditionally per Google's own guidance; Consent Mode gates what it's allowed to store/send. -->
+<script defer async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+<script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag("js", new Date());
+	gtag("config", GA_MEASUREMENT_ID);
+</script>
+
+{
+	// AdSense soft gate: controlled by PUBLIC_ADSENSE_ENABLED, not a manual
+	// uncomment-this-code step. Leave unset/false until trust pages + the full
+	// initial article set are live AND the real Publisher ID replaces the placeholder.
+	ADSENSE_ENABLED && (
+		<script
+			async
+			src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUBLISHER_ID}`}
+			crossorigin="anonymous"
+		/>
+	)
+}

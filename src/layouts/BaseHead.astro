@@ -3,6 +3,7 @@ import { ClientRouter } from "astro:transitions";
 
 // component imports
 import Seo from "@components/Seo.astro";
+import ConsentScripts from "@components/ConsentScripts.astro";
 
 // data
 import siteData from "@config/siteData";
@@ -18,17 +19,27 @@ export interface Props {
 const { type = "general", title, description, image, noindex = false } = Astro.props as Props;
 
 import WorkSansVariable from "@fontsource-variable/work-sans/files/work-sans-latin-wght-normal.woff2";
-import RalewayVariable from "@fontsource-variable/raleway/files/raleway-latin-wght-normal.woff2";
 import PlayfairDisplayVariable from "@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2";
-import CinzelDecorative from "@fontsource/cinzel-decorative/files/cinzel-decorative-latin-400-normal.woff2";
 ---
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- local font preload for better performance when not using ClientRouter -->
+<!--
+  Only preload fonts that are actually applied on every page:
+  - Work Sans Variable is the default body font (--font-sans, set globally).
+  - Playfair Display Variable is font-heading-1 (h1/h2/nav/buttons/logo — used everywhere).
+  Raleway (font-heading-2 / .h3) and Cinzel Decorative (font-decorative) were being
+  preloaded here too, but neither is applied on most pages — Raleway only renders
+  where a .h3 element exists (currently just the homepage), and Cinzel Decorative
+  isn't applied anywhere in the current markup at all. Preloading a resource that
+  then isn't used within the load event is exactly what triggers the browser's
+  "was preloaded ... but not used" console warning — removing the blanket preload
+  fixes that; both fonts still load normally via @font-face (fonts.css) wherever
+  their class is actually used, just without the forced-priority fetch on pages
+  that don't need them.
+-->
 <link rel="preload" href={WorkSansVariable} as="font" type="font/woff2" crossorigin="anonymous" />
-<link rel="preload" href={RalewayVariable} as="font" type="font/woff2" crossorigin="anonymous" />
 <link
 	rel="preload"
 	href={PlayfairDisplayVariable}
@@ -36,21 +47,25 @@ import CinzelDecorative from "@fontsource/cinzel-decorative/files/cinzel-decorat
 	type="font/woff2"
 	crossorigin="anonymous"
 />
-<link rel="preload" href={CinzelDecorative} as="font" type="font/woff2" crossorigin="anonymous" />
 
-<!-- Favicons. Generated from https://realfavicongenerator.net/ -->
+<!-- Favicons. Generated via scripts/generate-favicons.mjs from public/favicons/favicon-source.png -->
 <link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
 <link rel="shortcut icon" href="/favicons/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
 <link rel="manifest" href="/favicons/site.webmanifest" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <!-- other -->
 <meta name="generator" content={Astro.generator} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 
+{
+	// Google Search Console ownership verification (HTML-tag method).
+	import.meta.env.PUBLIC_SEARCH_CONSOLE_VERIFICATION && (
+		<meta name="google-site-verification" content={import.meta.env.PUBLIC_SEARCH_CONSOLE_VERIFICATION} />
+	)
+}
+
 <Seo type={type} title={title} description={description} image={image} noindex={noindex} />
+<ConsentScripts />
 
 <!-- no fallback as I saw issues with firefox fallback -->
 {siteData.useViewTransitions && <ClientRouter fallback="none" />}

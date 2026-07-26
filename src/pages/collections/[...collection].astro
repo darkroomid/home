@@ -3,13 +3,23 @@ import GalleryLayout from "@layouts/GalleryLayout.astro";
 import PhotoGrid from '@components//PhotoGrid.astro';
 import { getCollections, getImages } from '@data/imageStore';
 
-const allCollection = {
-	id: undefined,
-	name: 'All',
-};
 const collections = [...(await getCollections())];
 const { collection } = Astro.params;
 const images = await getImages(collection ? { collection } : {});
+
+// SEO: previously every /collections/* page shared the exact same hardcoded
+// title ("Collections") and description ("Page for collections."), regardless
+// of which gallery was being viewed — meaning ~8 different URLs (favourite,
+// nature, cityscape, people, random, black-and-white, wallpaper, plus the bare
+// "All" view) all had identical <title>/meta description, a duplicate-content
+// signal that hurts individual page ranking. Deriving both from the actual
+// collection name fixes that, and the page also had no <h1> at all.
+const activeCollection = collections.find((c) => c.id === collection);
+const collectionName = activeCollection?.name ?? "All Photos";
+const pageTitle = collection ? `${collectionName} — Photo Collections` : "Photo Collections";
+const pageDescription = collection
+	? `Browse the ${collectionName} photo collection on darkroom.id — original analog and digital photography.`
+	: "Browse all photo collections on darkroom.id — original analog and digital photography.";
 
 export const getStaticPaths = async () => {
 	return [{ id: undefined }, ...(await getCollections())].map((collection) => {
@@ -21,9 +31,10 @@ export const getStaticPaths = async () => {
 ---
 
 
-<GalleryLayout title="Collections" description="Page for collections.">
+<GalleryLayout title={pageTitle} description={pageDescription}>
 	<div class="site-container pt-24 md:pt-36">
 		<div class="mx-auto max-w-6xl text-center">
+			<h1 class="h1 mb-6">{collectionName}</h1>
         </div>
         <div class="flex justify-center mb-10">
             <div class="flex flex-wrap gap-2 justify-center">

@@ -38,7 +38,13 @@ export default defineConfig({
 				],
 			},
 		}),
-		sitemap(),
+		// Excludes pages that set noindex (currently just /stores, a "coming soon"
+		// placeholder) — without this, they'd be listed in the sitemap while
+		// simultaneously telling crawlers not to index them, an inconsistent
+		// signal search engines don't love.
+		sitemap({
+			filter: (page) => !page.includes("/stores"),
+		}),
 		compress({
 			HTML: true,
 			JavaScript: true,

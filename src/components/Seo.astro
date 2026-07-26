@@ -42,15 +42,23 @@ function trimEndSlash(str: string) {
 // put together the image URL
 const imageUrl =
 	trimEndSlash(Astro.site?.toString() || "") + (optimizedImage?.src || siteData.defaultImage.src);
+
+// Every page previously rendered <title> as the bare page title with no site-name
+// suffix at all (e.g. the About page's tab/SERP title was literally "About",
+// Journal was literally "Journal") — no consistent brand signal in search
+// results, browser tabs, or bookmarks. Appending the site name fixes that, while
+// avoiding a doubled-up "Darkroom.id · Darkroom.id" on the homepage, whose title
+// already *is* the site name.
+const brandedTitle = title.trim() === siteData.title.trim() ? title : `${title} · ${siteData.title}`;
 ---
 
 <SEO
-	title={title}
+	title={brandedTitle}
 	description={description}
 	canonical={canonicalUrl.toString()}
 	openGraph={{
 		basic: {
-			title: title,
+			title: brandedTitle,
 			type: "website",
 			image: imageUrl,
 			url: canonicalUrl.toString(),
@@ -70,7 +78,7 @@ const imageUrl =
 		site: "@" + siteData.author.twitter,
 		creator: "@" + siteData.author.twitter,
 		card: "summary_large_image",
-		title: title,
+		title: brandedTitle,
 		description: description,
 		image: imageUrl,
 	}}

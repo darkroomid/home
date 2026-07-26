@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "check-content": "node scripts/check-content.mjs",
     "astro": "astro"
   },
   "dependencies": {
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@playform/compress": "^0.1.7",
-    "@types/js-yaml": "^4.0.9"
+    "@types/js-yaml": "^4.0.9",
+    "gray-matter": "^4.0.3"
   }
 }

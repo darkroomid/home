@@ -1,16 +1,37 @@
 ---
 // layout
-import Gears from "@components/Gears.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 
 // components
 import Hero from "@components/Hero.astro";
+import LatestArticle from "@components/LatestArticle.astro";
 
 // data
 import siteData from "@config/siteData";
+
+// WebSite + Person structured data — there was no site-entity structured data
+// anywhere before this (only individual articles had schema.org markup), which
+// makes it harder for Google to understand what darkroom.id is and who runs it.
+const siteUrl = Astro.site?.toString() ?? "https://darkroom.id";
+const siteSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	name: siteData.title,
+	url: siteUrl,
+	author: {
+		"@type": "Person",
+		name: siteData.author.name,
+		sameAs: [
+			`https://instagram.com/${siteData.author.twitter}`,
+			`https://x.com/${siteData.author.twitter}`,
+		],
+	},
+};
 ---
 
 <BaseLayout title={siteData.title} description={siteData.description} navStartStyle="white">
     <Hero />
-    <Gears />
+    <LatestArticle />
 </BaseLayout>
+
+<script type="application/ld+json" set:html={JSON.stringify(siteSchema)} />

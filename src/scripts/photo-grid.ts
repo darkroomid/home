@@ -62,12 +62,14 @@ export async function setupGallery() {
 		return;
 	}
 
-	// Wait for all images to load
-	const imageElements = await waitForImagesToLoad(container);
-
-	// Get actual image dimensions after loading
-	const layout = createLayoutFor(imageElements, container);
-	console.log('Generated layout:', layout);
+	// Layout no longer waits for images to finish downloading — the natural
+	// aspect ratio of every photo is already known at build time (Astro's image()
+	// import gives width/height for free) and is passed through as data-nat-width
+	// / data-nat-height. Computing the grid from that means the layout — and the
+	// lazy-loaded images filling into it — appear immediately instead of the
+	// whole grid staying invisible until every photo (previously full
+	// camera-resolution files) had fully downloaded.
+	const layout = createLayoutFor(imageLinks, container);
 
 	applyImagesStyleBasedOnLayout(imageLinks, layout);
 	applyContainerStyleBasedOnLayout(container, layout);
@@ -83,12 +85,12 @@ export async function setupGallery() {
 }
 
 function createLayoutFor(
-	imageElements: HTMLImageElement[],
+	imageLinks: HTMLElement[],
 	container: HTMLElement,
 ): JustifiedLayoutResult {
-	const imageSizes = imageElements.map((img) => ({
-		width: img.naturalWidth || img.width || 300,
-		height: img.naturalHeight || img.height || 200,
+	const imageSizes = imageLinks.map((el) => ({
+		width: Number(el.dataset.natWidth) || 300,
+		height: Number(el.dataset.natHeight) || 200,
 	}));
 
 	const layout = justifiedLayout(imageSizes, {
@@ -98,25 +100,6 @@ function createLayoutFor(
 		containerPadding: 0,
 	});
 	return layout;
-}
-
-async function waitForImagesToLoad(container: HTMLElement) {
-	const imageElements = Array.from(container.querySelectorAll('img')) as HTMLImageElement[];
-
-	await Promise.all(
-		imageElements.map(
-			(img) =>
-				new Promise((resolve) => {
-					if (img.complete) {
-						resolve(null);
-					} else {
-						img.onload = () => resolve(null);
-						img.onerror = () => resolve(null);
-					}
-				}),
-		),
-	);
-	return imageElements;
 }
 
 function applyImagesStyleBasedOnLayout(imageLinks: HTMLElement[], layout: JustifiedLayoutResult) {
